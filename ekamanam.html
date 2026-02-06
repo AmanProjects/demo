@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekamanam - One Focus, Limitless Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@500;700;800&display=swap');
+
+        :root {
+            --primary: #2563EB;
+            --secondary: #1E40AF;
+            --accent: #3B82F6;
+            --dark: #0F172A;
+            --light: #F8FAFC;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow: hidden; /* Prevent scrolling, use slides */
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        h1, h2, h3, .brand-font {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Slide Container */
+        #presentation-container {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            box-sizing: border-box;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+            pointer-events: none; /* Disable interaction when hidden */
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: all;
+            z-index: 10;
+        }
+
+        .slide.prev {
+            transform: translateX(-100%);
+            opacity: 0;
+            z-index: 5;
+        }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .active .fade-up {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+        .delay-400 { transition-delay: 0.4s; }
+
+        /* Interactive Cards */
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+            border-color: var(--accent);
+        }
+
+        /* Navigation Controls */
+        .nav-controls {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 50;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-btn:hover {
+            background: white;
+            color: var(--dark);
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.3s ease;
+            z-index: 50;
+        }
+
+        /* Specific Element Styling */
+        .hero-text {
+            background: -webkit-linear-gradient(45deg, #60A5FA, #FFFFFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .telugu-text {
+            font-family: 'Noto Sans Telugu', sans-serif;
+        }
+
+        /* 3D Lab Simulation (CSS Only) */
+        .molecule-container {
+            perspective: 1000px;
+        }
+        .molecule {
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate 10s infinite linear;
+        }
+        @keyframes rotate {
+            from { transform: rotateY(0deg) rotateX(0deg); }
+            to { transform: rotateY(360deg) rotateX(360deg); }
+        }
+
+        /* Tabs Simulation */
+        .tab-btn.active {
+            background-color: var(--accent);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="presentation-container">
+        
+        <!-- Slide 1: Introduction -->
+        <div class="slide active" id="slide-1">
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
+                <div class="absolute top-10 left-10 w-64 h-64 bg-blue-500 rounded-full blur-[100px]"></div>
+                <div class="absolute bottom-10 right-10 w-96 h-96 bg-indigo-600 rounded-full blur-[120px]"></div>
+            </div>
+            
+            <div class="text-center max-w-4xl mx-auto z-10">
+                <div class="mb-6 fade-up">
+                    <span class="px-4 py-2 rounded-full bg-blue-900/50 border border-blue-500/30 text-blue-300 text-sm font-semibold tracking-wide">
+                        EDUCATION REIMAGINED
+                    </span>
+                </div>
+                <h1 class="text-6xl md:text-8xl font-bold mb-4 fade-up delay-100 leading-tight">
+                    Ekamanam
+                </h1>
+                <p class="text-2xl md:text-3xl text-gray-400 mb-8 fade-up delay-200 font-light italic">
+                    (ఏకమనం - "One Mind")
+                </p>
+                <h2 class="text-3xl md:text-5xl font-bold hero-text mb-8 fade-up delay-200">
+                    One Focus, Limitless Learning.
+                </h2>
+                <p class="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-12 fade-up delay-300">
+                    The Voice-Powered AI Tutor that transforms static pages into an immersive, interactive learning workspace.
+                </p>
+                <button onclick="nextSlide()" class="fade-up delay-400 bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-8 rounded-full shadow-lg transform transition hover:scale-105 flex items-center mx-auto gap-3">
+                    Start Presentation <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Problem -->
+        <div class="slide" id="slide-2">
+            <div class="max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="text-left">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 text-red-400 fade-up">The Challenge</h2>
+                    <h3 class="text-2xl md:text-3xl font-semibold mb-6 fade-up delay-100">
+                        "Staring at static pages doesn't equal learning."
+                    </h3>
+                    <ul class="space-y-6 text-lg text-gray-300 fade-up delay-200">
+                        <li class="flex items-start gap-4">
+                            <i class="fas fa-times-circle text-red-500 mt-1 text-xl"></i>
+                            <div>
+                                <strong class="text-white block">Passive Consumption</strong>
+                                Students read words without visualizing concepts.
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <i class="fas fa-language text-red-500 mt-1 text-xl"></i>
+                            <div>
+                                <strong class="text-white block">Language Barriers</strong>
+                                Textbooks are often in English, while students think in their native language.
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <i class="fas fa-brain text-red-500 mt-1 text-xl"></i>
+                            <div>
+                                <strong class="text-white block">Retention Struggle</strong>
+                                Lack of interaction leads to overwhelming cognitive load.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-gray-800/50 p-8 rounded-2xl border border-gray-700 fade-up delay-300 relative overflow-hidden">
+                    <!-- Symbolic representation of static text -->
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900 z-10"></div>
+                    <div class="space-y-3 opacity-30 blur-[1px]">
+                        <div class="h-4 bg-gray-500 rounded w-3/4"></div>
+                        <div class="h-4 bg-gray-500 rounded w-full"></div>
+                        <div class="h-4 bg-gray-500 rounded w-5/6"></div>
+                        <div class="h-4 bg-gray-500 rounded w-full"></div>
+                        <div class="h-4 bg-gray-500 rounded w-4/5"></div>
+                        <div class="h-4 bg-gray-500 rounded w-full"></div>
+                        <div class="h-4 bg-gray-500 rounded w-2/3"></div>
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center z-20">
+                        <div class="bg-red-500/20 backdrop-blur-md border border-red-500/50 p-6 rounded-xl text-center">
+                            <i class="fas fa-book-dead text-4xl text-red-400 mb-2"></i>
+                            <p class="font-bold text-red-100">Static Content</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: The Solution - Core Pillars -->
+        <div class="slide" id="slide-3">
+            <h2 class="text-4xl md:text-6xl font-bold mb-4 text-center fade-up"><span class="text-blue-500">Ekamanam</span> Reimagines Learning</h2>
+            <p class="text-xl text-gray-400 mb-12 text-center fade-up delay-100">A complete learning workspace built on four pillars.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 w-full max-w-7xl px-4">
+                <!-- Pillar 1 -->
+                <div class="bg-gray-800/40 border border-gray-700 p-8 rounded-xl text-center hover:bg-gray-800/80 transition duration-300 fade-up delay-100 group">
+                    <div class="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-500/40 transition">
+                        <i class="fas fa-eye text-3xl text-blue-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">See</h3>
+                    <p class="text-gray-400 text-sm">3D Visualizations & Interactive Diagrams. Don't just imagine a molecule—rotate it.</p>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="bg-gray-800/40 border border-gray-700 p-8 rounded-xl text-center hover:bg-gray-800/80 transition duration-300 fade-up delay-200 group">
+                    <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-green-500/40 transition">
+                        <i class="fas fa-headphones text-3xl text-green-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Hear</h3>
+                    <p class="text-gray-400 text-sm">Auditory learning support. Concepts explained naturally in a voice you understand.</p>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="bg-gray-800/40 border border-gray-700 p-8 rounded-xl text-center hover:bg-gray-800/80 transition duration-300 fade-up delay-300 group">
+                    <div class="w-16 h-16 bg-yellow-500/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-yellow-500/40 transition">
+                        <i class="fas fa-microphone text-3xl text-yellow-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Speak</h3>
+                    <p class="text-gray-400 text-sm">Voice Input. Ask questions naturally in 10+ languages (Telugu, Hindi, Tamil).</p>
+                </div>
+
+                <!-- Pillar 4 -->
+                <div class="bg-gray-800/40 border border-gray-700 p-8 rounded-xl text-center hover:bg-gray-800/80 transition duration-300 fade-up delay-400 group">
+                    <div class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-purple-500/40 transition">
+                        <i class="fas fa-brain text-3xl text-purple-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Learn</h3>
+                    <p class="text-gray-400 text-sm">Active mastering via Labs, Spaced Repetition, and 50+ Tools.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Feature Deep Dive (Interactive) -->
+        <div class="slide" id="slide-4">
+            <div class="flex flex-col md:flex-row w-full max-w-7xl gap-8 h-[80vh]">
+                <!-- Sidebar -->
+                <div class="w-full md:w-1/3 flex flex-col justify-center space-y-4 fade-up">
+                    <h2 class="text-4xl font-bold mb-6">Powerful Features</h2>
+                    <p class="text-gray-400 mb-6">Click to explore the technology behind Ekamanam.</p>
+                    
+                    <button onclick="showFeature('voice')" class="feature-tab active p-4 rounded-lg bg-gray-800 hover:bg-gray-700 text-left transition border-l-4 border-blue-500 shadow-lg">
+                        <h4 class="font-bold text-lg"><i class="fas fa-microphone mr-2"></i> Voice-Powered AI</h4>
+                        <p class="text-xs text-gray-400 mt-1">Speak naturally, no typing needed.</p>
+                    </button>
+                    
+                    <button onclick="showFeature('multi')" class="feature-tab p-4 rounded-lg bg-gray-800/50 hover:bg-gray-700 text-left transition border-l-4 border-transparent hover:border-green-500">
+                        <h4 class="font-bold text-lg"><i class="fas fa-language mr-2"></i> Multilingual Support</h4>
+                        <p class="text-xs text-gray-400 mt-1">10+ Languages (Hindi, Telugu, etc.)</p>
+                    </button>
+                    
+                    <button onclick="showFeature('visuals')" class="feature-tab p-4 rounded-lg bg-gray-800/50 hover:bg-gray-700 text-left transition border-l-4 border-transparent hover:border-purple-500">
+                        <h4 class="font-bold text-lg"><i class="fas fa-cubes mr-2"></i> 3D & Labs</h4>
+                        <p class="text-xs text-gray-400 mt-1">Interactive molecules, maps, and shapes.</p>
+                    </button>
+
+                    <button onclick="showFeature('tools')" class="feature-tab p-4 rounded-lg bg-gray-800/50 hover:bg-gray-700 text-left transition border-l-4 border-transparent hover:border-yellow-500">
+                        <h4 class="font-bold text-lg"><i class="fas fa-toolbox mr-2"></i> 50+ Smart Tools</h4>
+                        <p class="text-xs text-gray-400 mt-1">Flashcards, Exam Prep, Progress Tracking.</p>
+                    </button>
+                </div>
+
+                <!-- Content Area -->
+                <div class="w-full md:w-2/3 bg-gray-900 rounded-2xl border border-gray-700 p-8 relative overflow-hidden fade-up delay-200 shadow-2xl">
+                    
+                    <!-- Feature: Voice -->
+                    <div id="feat-voice" class="feature-content h-full flex flex-col justify-center items-center text-center">
+                        <div class="w-32 h-32 bg-blue-500/20 rounded-full flex items-center justify-center mb-8 relative">
+                            <i class="fas fa-microphone text-5xl text-blue-400 absolute z-10"></i>
+                            <div class="absolute w-full h-full rounded-full border border-blue-500 animate-ping opacity-20"></div>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-4">"Explain this equation to me."</h3>
+                        <p class="text-xl text-gray-300 max-w-md">
+                            Ekamanam listens to your voice input. It feels like a conversation with a tutor, not a search bar query.
+                        </p>
+                    </div>
+
+                    <!-- Feature: Multilingual -->
+                    <div id="feat-multi" class="feature-content h-full flex flex-col justify-center items-center text-center hidden">
+                        <div class="grid grid-cols-2 gap-4 mb-8">
+                            <div class="bg-gray-800 p-4 rounded-lg border border-green-500/30">English</div>
+                            <div class="bg-gray-800 p-4 rounded-lg border border-green-500/30 font-bold text-green-400">తెలుగు</div>
+                            <div class="bg-gray-800 p-4 rounded-lg border border-green-500/30 font-bold text-green-400">हिन्दी</div>
+                            <div class="bg-gray-800 p-4 rounded-lg border border-green-500/30 font-bold text-green-400">தமிழ்</div>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-4">Language is no barrier.</h3>
+                        <p class="text-xl text-gray-300 max-w-md">
+                            Whether you speak Telugu, Hindi, or Tamil, the AI adapts explanations to your chosen language.
+                        </p>
+                    </div>
+
+                    <!-- Feature: Visuals -->
+                    <div id="feat-visuals" class="feature-content h-full flex flex-col justify-center items-center text-center hidden">
+                        <div class="molecule-container w-40 h-40 mb-8 flex items-center justify-center">
+                            <!-- Simple CSS 3D Cube representation -->
+                            <div class="relative w-24 h-24 molecule">
+                                <div class="absolute w-24 h-24 bg-purple-500/30 border border-purple-400" style="transform: translateZ(48px);"></div>
+                                <div class="absolute w-24 h-24 bg-purple-500/30 border border-purple-400" style="transform: rotateY(180deg) translateZ(48px);"></div>
+                                <div class="absolute w-24 h-24 bg-purple-500/30 border border-purple-400" style="transform: rotateY(90deg) translateZ(48px);"></div>
+                                <div class="absolute w-24 h-24 bg-purple-500/30 border border-purple-400" style="transform: rotateY(-90deg) translateZ(48px);"></div>
+                                <div class="absolute w-24 h-24 bg-purple-500/30 border border-purple-400" style="transform: rotateX(90deg) translateZ(48px);"></div>
+                                <div class="absolute w-24 h-24 bg-purple-500/30 border border-purple-400" style="transform: rotateX(-90deg) translateZ(48px);"></div>
+                            </div>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-4">Show, Don't Just Tell.</h3>
+                        <p class="text-xl text-gray-300 max-w-md">
+                            Includes Math Lab, Chemistry Lab (with 3D molecules), Physics Lab, Code Editor, and Globe Explorer.
+                        </p>
+                    </div>
+
+                    <!-- Feature: Tools -->
+                    <div id="feat-tools" class="feature-content h-full flex flex-col justify-center items-center text-center hidden">
+                        <div class="flex flex-wrap justify-center gap-3 mb-8 max-w-md">
+                            <span class="px-3 py-1 bg-yellow-900/50 text-yellow-300 rounded-full text-sm">Flashcards</span>
+                            <span class="px-3 py-1 bg-yellow-900/50 text-yellow-300 rounded-full text-sm">Spaced Repetition</span>
+                            <span class="px-3 py-1 bg-yellow-900/50 text-yellow-300 rounded-full text-sm">Exam Prep</span>
+                            <span class="px-3 py-1 bg-yellow-900/50 text-yellow-300 rounded-full text-sm">Progress Tracking</span>
+                            <span class="px-3 py-1 bg-yellow-900/50 text-yellow-300 rounded-full text-sm">Summaries</span>
+                        </div>
+                        <h3 class="text-3xl font-bold mb-4">The Complete Workspace</h3>
+                        <p class="text-xl text-gray-300 max-w-md">
+                            Upload a PDF and Ekamanam generates summaries, key points, and quizzes instantly.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: For Educators (Deans & Principals) -->
+        <div class="slide" id="slide-5">
+            <h2 class="text-4xl md:text-5xl font-bold mb-12 text-center fade-up">Why <span class="text-blue-500">Institutions</span> Need Ekamanam</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto w-full px-4">
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl border-t-4 border-blue-500 shadow-xl fade-up delay-100">
+                    <i class="fas fa-chart-line text-4xl text-blue-400 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">Boost Learning Outcomes</h3>
+                    <p class="text-gray-400">
+                        Transforms passive reading into active engagement, directly improving retention rates and exam performance.
+                    </p>
+                </div>
+
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl border-t-4 border-green-500 shadow-xl fade-up delay-200">
+                    <i class="fas fa-users text-4xl text-green-400 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">Inclusive Education</h3>
+                    <p class="text-gray-400">
+                        With support for 10+ regional languages, no student is left behind due to language barriers.
+                    </p>
+                </div>
+
+                <div class="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-2xl border-t-4 border-purple-500 shadow-xl fade-up delay-300">
+                    <i class="fas fa-robot text-4xl text-purple-400 mb-6"></i>
+                    <h3 class="text-2xl font-bold mb-4">Future-Ready Labs</h3>
+                    <p class="text-gray-400">
+                        Provides virtual access to Physics, Chemistry, and Math labs without the need for expensive physical infrastructure.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+         <!-- Slide 6: The Labs Showcase -->
+         <div class="slide" id="slide-6">
+            <h2 class="text-4xl font-bold mb-2 fade-up text-center">Inside the Labs</h2>
+            <p class="text-center text-gray-400 mb-10 fade-up delay-100">Specialized AI modules for every subject.</p>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 max-w-6xl w-full mx-auto">
+                
+                <!-- Math Lab -->
+                <div class="bg-gray-800 p-6 rounded-xl text-center fade-up delay-100 hover:bg-gray-750 border border-gray-700">
+                    <i class="fas fa-square-root-alt text-4xl text-pink-400 mb-4"></i>
+                    <h3 class="text-xl font-bold">Math Lab</h3>
+                    <p class="text-sm text-gray-400 mt-2">Graph plotters, matrix calculators & geometry visuals.</p>
+                </div>
+
+                <!-- Chemistry Lab -->
+                <div class="bg-gray-800 p-6 rounded-xl text-center fade-up delay-200 hover:bg-gray-750 border border-gray-700">
+                    <i class="fas fa-flask text-4xl text-green-400 mb-4"></i>
+                    <h3 class="text-xl font-bold">Chemistry Lab</h3>
+                    <p class="text-sm text-gray-400 mt-2">Vyonn AI with 3D molecules, periodic table & equation balancing.</p>
+                </div>
+
+                <!-- Physics Lab -->
+                <div class="bg-gray-800 p-6 rounded-xl text-center fade-up delay-300 hover:bg-gray-750 border border-gray-700">
+                    <i class="fas fa-bolt text-4xl text-yellow-400 mb-4"></i>
+                    <h3 class="text-xl font-bold">Physics Lab</h3>
+                    <p class="text-sm text-gray-400 mt-2">16+ experiments & real-time simulations.</p>
+                </div>
+
+                <!-- Code Editor -->
+                <div class="bg-gray-800 p-6 rounded-xl text-center fade-up delay-400 hover:bg-gray-750 border border-gray-700">
+                    <i class="fas fa-code text-4xl text-blue-400 mb-4"></i>
+                    <h3 class="text-xl font-bold">Code Editor</h3>
+                    <p class="text-sm text-gray-400 mt-2">Python, JS, HTML with live preview & mobile toggle.</p>
+                </div>
+
+                <!-- Globe Explorer -->
+                <div class="bg-gray-800 p-6 rounded-xl text-center fade-up delay-500 hover:bg-gray-750 border border-gray-700">
+                    <i class="fas fa-globe-asia text-4xl text-cyan-400 mb-4"></i>
+                    <h3 class="text-xl font-bold">Globe Explorer</h3>
+                    <p class="text-sm text-gray-400 mt-2">3D interactive globe for geography & wonders.</p>
+                </div>
+
+                <!-- Vyonn AI -->
+                <div class="bg-gray-800 p-6 rounded-xl text-center fade-up delay-500 hover:bg-gray-750 border border-blue-500 bg-blue-900/10">
+                    <i class="fas fa-sparkles text-4xl text-white mb-4"></i>
+                    <h3 class="text-xl font-bold text-white">Vyonn AI</h3>
+                    <p class="text-sm text-gray-300 mt-2">Your personal companion to guide you through it all.</p>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Slide 7: Conclusion -->
+        <div class="slide" id="slide-7">
+            <div class="text-center max-w-3xl px-6">
+                <h2 class="text-5xl md:text-7xl font-bold mb-8 fade-up text-white">
+                    One Focus.<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Limitless Learning.</span>
+                </h2>
+                <p class="text-2xl text-gray-300 mb-12 fade-up delay-100">
+                    Bring the future of education to your classroom today.
+                </p>
+                
+                <div class="flex flex-col md:flex-row gap-6 justify-center fade-up delay-200">
+                    <a href="https://www.ekamanam.com" target="_blank" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-10 rounded-full shadow-lg transform transition hover:scale-105 text-lg">
+                        Visit Ekamanam.com
+                    </a>
+                </div>
+                
+                <p class="mt-12 text-gray-500 text-sm fade-up delay-300">
+                    © 2026 Ekamanam. All rights reserved. <br> Use arrow keys to navigate.
+                </p>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar" id="progress-bar"></div>
+
+        <!-- Navigation Controls -->
+        <div class="nav-controls">
+            <button class="nav-btn" onclick="prevSlide()" aria-label="Previous Slide">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <span id="slide-counter" class="text-gray-400 self-center font-mono">1 / 7</span>
+            <button class="nav-btn" onclick="nextSlide()" aria-label="Next Slide">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        // State
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progressBar = document.getElementById('progress-bar');
+        const slideCounter = document.getElementById('slide-counter');
+        const totalSlides = slides.length;
+
+        // Init
+        updateSlide();
+
+        // Functions
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else if (index < currentSlide) {
+                    slide.classList.add('prev');
+                }
+            });
+
+            // Update progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            // Update counter
+            slideCounter.innerText = `${currentSlide + 1} / ${totalSlides}`;
+        }
+
+        // Feature Tabs Logic
+        function showFeature(featureId) {
+            // Update buttons
+            document.querySelectorAll('.feature-tab').forEach(btn => {
+                btn.classList.remove('active', 'bg-gray-800', 'border-blue-500', 'shadow-lg');
+                btn.classList.add('bg-gray-800/50', 'border-transparent');
+                
+                // If it's the clicked button
+                if(btn.getAttribute('onclick').includes(featureId)) {
+                    btn.classList.add('active', 'bg-gray-800', 'border-blue-500', 'shadow-lg');
+                    btn.classList.remove('bg-gray-800/50', 'border-transparent');
+                }
+            });
+
+            // Update content
+            document.querySelectorAll('.feature-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(`feat-${featureId}`).classList.remove('hidden');
+        }
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+    </script>
+</body>
+</html>
